@@ -4,8 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0f766e">
-<meta name="description" content="دليل خدمات قرية الشنباب: المواصلات، الدليل الشرعي، الدليل الطبي والعيادات والمعامل.">
-<meta name="color-scheme" content="light">
 <title>دليل خدمات الشنباب - الشامل (مواصلات - شرعي - طبي)</title>
 <style>
 :root{--bg:#f3f6f8;--ink:#17212b;--muted:#64748b;--green:#0f766e;--blue:#1d4ed8;--red:#b91c1c}
@@ -19,7 +17,7 @@ main{max-width:1100px;margin:auto;padding:16px}
 .tab,.filter{font:inherit;cursor:pointer;white-space:nowrap;border:1px solid #cbd5e1;border-radius:24px;background:#fff;padding:9px 15px;color:#334155}
 .tab.active,.filter.active{background:var(--green);border-color:var(--green);color:#fff}
 .searchbox{position:sticky;top:0;background:var(--bg);padding:8px 0 12px;z-index:5}
-input[type=search]{width:100%;font:inherit;padding:13px 15px;border:1px solid #cbd5e1;border-radius:12px;background:white;outline-offset:2px} input[type=search]:focus{border-color:var(--green);box-shadow:0 0 0 3px #0f766e20}
+input[type=search]{width:100%;font:inherit;padding:13px 15px;border:1px solid #cbd5e1;border-radius:12px;background:white}
 .filters{display:flex;gap:8px;overflow-x:auto;padding:0 0 14px}
 .count{color:var(--muted);font-size:13px}
 .section{margin:18px 0 24px}
@@ -35,7 +33,7 @@ input[type=search]{width:100%;font:inherit;padding:13px 15px;border:1px solid #c
 .badge{font-size:12px;background:#e0f2f1;color:#115e59;padding:4px 9px;border-radius:20px;white-space:nowrap}
 .phones{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .phone{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:#ecfdf5;color:#166534;border:1px solid #bbf7d0;padding:8px 11px;border-radius:10px;direction:ltr;font-weight:bold}
-.phone.secondary{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe} .phone:focus-visible,.tab:focus-visible,.filter:focus-visible{outline:3px solid #f59e0b;outline-offset:2px} .tab,.filter,.phone{touch-action:manipulation}
+.phone.secondary{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
 .meta{font-size:13px;color:var(--muted);margin-top:8px}
 .note,.intro{font-size:13px;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:10px;margin:12px 0}
 .intro{background:#fff;border-color:#dbe3e8;font-size:14px}
@@ -68,21 +66,21 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 12px 24px
 <div id="results"></div>
 
 <div id="shariaNotices" hidden>
-  <div class="note"><strong>ملاحظة عامة:</strong> هذا الدليل يضم أشخاصًا معروفين بيننا بالصدق والأمانة، ممن مارسوا مهامهم بتجربة وخبرة مشهودة.</div>
-  <div class="note"><strong>تنبيه للاستشارات:</strong> يمنع التواصل الهاتفي. يُرجى إرسال السؤال عبر الواتساب فقط.</div>
-  <p class="count">آخر تحديث للدليل الشرعي: 29 / 7 / 2025 م.</p>
+  <div class="note"><strong>ملاحظة عامة:</strong> هذا الدليل يضم أشخاصًا معروفين بيننا بالصدق والأمانة، ممن مارسوا مهامهم بتجربة وخبرة مشهودة[cite: 2].</div>
+  <div class="note"><strong>تنبيه للاستشارات:</strong> يمنع التواصل الهاتفي. يُرجى إرسال السؤال عبر الواتساب فقط[cite: 2].</div>
+  <p class="count">آخر تحديث للدليل الشرعي: 10 / 10 / 2026 م.</p>
 </div>
 
 <div id="medicalNotices" hidden>
   <div class="emergency-box">
     <strong>🚑 الطوارئ 24 ساعة والطوارئ والزيارات المنزلية (المجمع الطبي):</strong> 01007748178<br>
-    📍 <em>العنوان:</em> الطريق الخارجي للقرية – أعلى مسجد الأنصار.
+    📍 <em>العنوان:</em> الطريق الخارجي للقرية – أعلى مسجد الأنصار[cite: 3].
   </div>
-  <p class="count">آخر تحديث للدليل الطبي: 10 / 10 / 2026 م.</p>
+  <p class="count">آخر تحديث للدليل الطبي: 10 / 10 / 2026 م[cite: 3].</p>
 </div>
 
 </main>
-<footer>دليل خدمات قرية الشنباب — المواصلات والدليل الشرعي والدليل الطبي. يُرجى التأكد من المواعيد وأرقام التواصل قبل الاعتماد عليها.</footer>
+<footer>تم جمع وتحديث جميع الأدلة الخدمية لقرية الشنباب في ملف واحد. آخر تحديث شامل: 10 / 10 / 2026 م.</footer>
 
 <script>
 const transportEntries = [
@@ -103,7 +101,6 @@ const transportEntries = [
   {name:"توفيق رجب توفيق",category:"ملاكي مشاوير",phones:["01027679303"]},
   {name:"علي أحمد عبد الشكور",category:"ملاكي مشاوير",phones:["01069579977"]},
   {name:"محمود محمد حنفي عاشور",category:"ملاكي مشاوير",phones:["011140952332"]},
-  {name:"علاء يحيى بكير",category:"ملاكي مشاوير",phones:["01201212007","01095946870"]},
   {name:"عادل محمد يوسف",category:"أجرة مشاوير",phones:["01026203068","01154966964"]},
   {name:"إبراهيم سعيد برعي",category:"أجرة مشاوير",phones:["01011567375"]}
 ];
@@ -165,7 +162,7 @@ const medicalSections = [
       {name: "د. جمال بكير", spec: "نساء وتوليد", days: "السبت والأربعاء", hours: "9 ص : 10 م", phones: ["01126032472"], address: "بجوار مسجد الحسين"},
       {name: "د. أحمد سمير", spec: "أسنان", days: "يومياً عدا الجمعة", hours: "5 م : 9 م", phones: ["01126245352"], address: "بجوار منزل عزت يونس عمران"},
       {name: "د. رضا عبد العزيز", spec: "أسنان", days: "يومياً عدا الجمعة", hours: "2 م : 4 م", phones: ["01144156014"], address: "بجوار زاوية البكيرية"},
-      {name: "د. حسن هاشم", spec: "أطفال", days: "يومياً عدا الجمعة", hours: "المغرب", phones: ["01153111332"], address: "بجوار منزل أستاذ محمود هاشم"},
+      {name: "د. حسن هاشم", spec: "أطفال", days: "يومياً حتى الجمعة", hours: "3 م : 7 م", phones: ["01153111332"], address: "بجوار منزل أستاذ محمود هاشم"},
       {name: "د. ياسر علي فهيم", spec: "طب الأسرة", days: "يومياً عدا الجمعة", hours: "7 م : 12 م", phones: ["01003472288"], address: "فوق استديو درش"},
       {name: "د. هاجر يوسف", spec: "أطفال", days: "يومياً عدا الاثنين والجمعة", hours: "8 م : 9 م", phones: ["01150806533"], address: "بجوار زاوية آل بكير"},
       {name: "د. عبده موسى", spec: "جراحة", days: "يومياً عدا الجمعة", hours: "المغرب", phones: ["01015160920"], address: "منزله – بجوار محمد شكري"},

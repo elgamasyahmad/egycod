@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<meta name="description" content="دليل خدمات قرية الشنباب: المواصلات، الدليل الشرعي، الدليل الطبي والعيادات والمعامل.">
+<meta name="color-scheme" content="light">
+<title>دليل خدمات الشنباب - الشامل (مواصلات - شرعي - طبي)</title>
+<style>
+:root{--bg:#f3f6f8;--ink:#17212b;--muted:#64748b;--green:#0f766e;--blue:#1d4ed8;--red:#b91c1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#115e59,#0f766e);color:#fff;padding:22px 16px;text-align:center}
+header h1{font-size:clamp(22px,4vw,32px);margin:0}
+header p{margin:5px 0 0;font-size:14px}
+main{max-width:1100px;margin:auto;padding:16px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.tab,.filter{font:inherit;cursor:pointer;white-space:nowrap;border:1px solid #cbd5e1;border-radius:24px;background:#fff;padding:9px 15px;color:#334155}
+.tab.active,.filter.active{background:var(--green);border-color:var(--green);color:#fff}
+.searchbox{position:sticky;top:0;background:var(--bg);padding:8px 0 12px;z-index:5}
+input[type=search]{width:100%;font:inherit;padding:13px 15px;border:1px solid #cbd5e1;border-radius:12px;background:white;outline-offset:2px} input[type=search]:focus{border-color:var(--green);box-shadow:0 0 0 3px #0f766e20}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:0 0 14px}
+.count{color:var(--muted);font-size:13px}
+.section{margin:18px 0 24px}
+.section h2{margin:0 0 12px;padding:10px 14px;border-radius:10px;background:#d9e8b8;color:#26351b;font-size:20px}
+.section.women h2{background:#e3d8ef;color:#46345d}
+.section.consult h2{background:#c8ddf6;color:#153a67}
+.section.medical h2{background:#fef08a;color:#713f12}
+.section.lab h2{background:#fed7aa;color:#7c2d12}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;box-shadow:0 2px 8px #0f172a0a}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.name{font-size:17px;font-weight:700;margin:0}
+.badge{font-size:12px;background:#e0f2f1;color:#115e59;padding:4px 9px;border-radius:20px;white-space:nowrap}
+.phones{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.phone{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:#ecfdf5;color:#166534;border:1px solid #bbf7d0;padding:8px 11px;border-radius:10px;direction:ltr;font-weight:bold}
+.phone.secondary{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe} .phone:focus-visible,.tab:focus-visible,.filter:focus-visible{outline:3px solid #f59e0b;outline-offset:2px} .tab,.filter,.phone{touch-action:manipulation}
+.meta{font-size:13px;color:var(--muted);margin-top:8px}
+.note,.intro{font-size:13px;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:10px;margin:12px 0}
+.intro{background:#fff;border-color:#dbe3e8;font-size:14px}
+.emergency-box{background:#fef2f2;border:1px solid #fca5a5;border-radius:12px;padding:12px;margin-bottom:14px;color:#991b1b;font-size:14px}
+.empty{text-align:center;padding:28px;color:var(--muted);background:white;border-radius:12px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 12px 24px}
+@media(min-width:700px){main{padding:22px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>دليل خدمات الشنباب – الملف الشامل</h1>
+  <p>المواصلات • الدليل الشرعي • الدليل الطبي والعيادات والمعامل</p>
+</header>
+<main>
+<div class="tabs" id="tabs">
+  <button class="tab active" data-view="transport">دليل المواصلات</button>
+  <button class="tab" data-view="sharia">الدليل الشرعي</button>
+  <button class="tab" data-view="medical">الدليل الطبي</button>
+</div>
+
+<div id="intro" class="intro">اختر القسم المطلوب، ثم ابحث بالاسم أو التخصص أو رقم الهاتف. يمكنك الضغط على رقم الهاتف للاتصال مباشرة.</div>
+
+<div class="searchbox">
+  <input id="search" type="search" placeholder="ابحث بالاسم أو التخصص أو رقم الهاتف..." aria-label="بحث">
+</div>
+
+<div class="filters" id="filters"></div>
+<p class="count" id="count"></p>
+<div id="results"></div>
+
+<div id="shariaNotices" hidden>
+  <div class="note"><strong>ملاحظة عامة:</strong> هذا الدليل يضم أشخاصًا معروفين بيننا بالصدق والأمانة، ممن مارسوا مهامهم بتجربة وخبرة مشهودة.</div>
+  <div class="note"><strong>تنبيه للاستشارات:</strong> يمنع التواصل الهاتفي. يُرجى إرسال السؤال عبر الواتساب فقط.</div>
+  <p class="count">آخر تحديث للدليل الشرعي: 29 / 7 / 2025 م.</p>
+</div>
+
+<div id="medicalNotices" hidden>
+  <div class="emergency-box">
+    <strong>🚑 الطوارئ 24 ساعة والطوارئ والزيارات المنزلية (المجمع الطبي):</strong> 01007748178<br>
+    📍 <em>العنوان:</em> الطريق الخارجي للقرية – أعلى مسجد الأنصار.
+  </div>
+  <p class="count">آخر تحديث للدليل الطبي: 10 / 10 / 2026 م.</p>
+</div>
+
+</main>
+<footer>دليل خدمات قرية الشنباب — المواصلات والدليل الشرعي والدليل الطبي. يُرجى التأكد من المواعيد وأرقام التواصل قبل الاعتماد عليها.</footer>
+
+<script>
+const transportEntries = [
+  {name:"زكريا إبراهيم شقاوي",category:"أجرة",phones:["01000651520","0128692876"],from:"مسجد المحجوب",to:"المنيب",time:"6:00 ص"},
+  {name:"علاء عيش الغزالي",category:"أجرة",phones:["01050673004"],from:"مطعم مصطفى حامد",to:"المنيب",time:"5:50 ص"},
+  {name:"جميل سلامة",category:"أجرة",phones:["01110282094"],from:"مسجد الأربعين",to:"المنيب",time:"بعد الفجر"},
+  {name:"نياط نصار",category:"أجرة",phones:["01007385062"],from:"مسجد الأنصار",to:"المنيب",time:"6:00 ص"},
+  {name:"نشأت أحمد أبوعيطة",category:"أجرة",phones:["01016058188"],from:"مسجد فجر الإسلام",to:"المنيب",time:"5:50 ص"},
+  {name:"محمد أبو العلا",category:"أجرة",phones:["01091652331"],from:"مطعم مصطفى حامد",to:"التجمع",time:"6:00 ص"},
+  {name:"محمود عباس حامد",category:"شغل أوبر",phones:["01090250083","01114036785"]},
+  {name:"وائل محمد عاشور",category:"شغل أوبر",phones:["01278833819","012263905936"]},
+  {name:"خالد حمادة شبكة",category:"سوزوكي مشاوير",phones:["01027385038"]},
+  {name:"طه أبو رمضان",category:"سوزوكي مشاوير",phones:["011175272433"]},
+  {name:"أحمد حسن برعي",category:"سوزوكي مشاوير",phones:["01158576615"]},
+  {name:"هاني عمر راضي",category:"بيجو للمشاوير",phones:["01015521938"]},
+  {name:"أيمن ربيع دعابس",category:"ملاكي مشاوير",phones:["01009161942","01122100979"]},
+  {name:"وليد الطواشي",category:"ملاكي مشاوير",phones:["01283239785"]},
+  {name:"توفيق رجب توفيق",category:"ملاكي مشاوير",phones:["01027679303"]},
+  {name:"علي أحمد عبد الشكور",category:"ملاكي مشاوير",phones:["01069579977"]},
+  {name:"محمود محمد حنفي عاشور",category:"ملاكي مشاوير",phones:["011140952332"]},
+  {name:"علاء يحيى بكير",category:"ملاكي مشاوير",phones:["01201212007","01095946870"]},
+  {name:"عادل محمد يوسف",category:"أجرة مشاوير",phones:["01026203068","01154966964"]},
+  {name:"إبراهيم سعيد برعي",category:"أجرة مشاوير",phones:["01011567375"]}
+];
+
+const shariaSections = [
+  {title:"دليل مغسلي الموتى",key:"men",items:[
+    {name:"ش. صلاح مراد دعابس",phones:["01066067784"]},
+    {name:"ش. رأفت توفيق البدوي",phones:["01003860343"]},
+    {name:"ش. وليد إسماعيل برعي",phones:["01030188285","01147444215"]},
+    {name:"ش. صبري فوزي سلامة",phones:["01063978042"]},
+    {name:"ش. ياسر عبد اللطيف بكير",phones:["01096028480"]},
+    {name:"ش. محمد رمضان أبو هندي",phones:["01014489962"]},
+    {name:"ش. ربيع ثروت الجسمي",phones:["01119644215"]},
+    {name:"ش. موسى جمعة الشريف",phones:["011188786668","01118794979"]},
+    {name:"ش. رضا سيد زين",phones:["01019505087"]}
+  ]},
+  {title:"دليل المغسلات الشرعيات لنساء الشباب",key:"women",items:[
+    {name:"ش. محمد جمعة الشريف",phones:["01152535338"]},
+    {name:"ش. كامل رياض جودة",phones:["01013406443"]},
+    {name:"ش. ربيع ثروت الجسمي",phones:["01119644215"]}
+  ]},
+  {title:"دليل الاستشارات",key:"consult",items:[
+    {name:"ش. محمود هنداوي",phones:["01115833191"],note:"عضو لجنة الفتوى بالأزهر الشريف"},
+    {name:"ش. حمادة عبد السميع",phones:["01116248060"],note:"عضو لجنة الفتوى بالأزهر الشريف"},
+    {name:"ش. إبراهيم عمران",phones:["01141200669"],note:"يمنع التواصل الهاتفي - واتساب فقط"},
+    {name:"د. أحمد فتحي بكير",phones:["01101001924"],note:"واتساب فقط"},
+    {name:"ش. محمد عمر البقلولي",phones:["01110048354"]},
+    {name:"ش. محمود محمد حمودة",phones:["01033263330"]}
+  ]}
+];
+
+const medicalSections = [
+  {
+    title: "المجمع الطبي",
+    key: "complex",
+    items: [
+      {name: "د. أحمد عبد الفتاح", spec: "أسنان", days: "السبت – الاثنين – الخميس", hours: "4 م : 10 م", phones: ["01007748178"], address: "الطريق الخارجي للقرية - أعلى مسجد الأنصار"},
+      {name: "د. محمد صالح", spec: "أسنان", days: "الأحد – الثلاثاء", hours: "4 م : 10 م", phones: ["01007748178"], address: "الطريق الخارجي للقرية - أعلى مسجد الأنصار"},
+      {name: "د. سيف", spec: "أسنان", days: "الأربعاء – الجمعة", hours: "4 م : 10 م", phones: ["01007748178"], address: "الطريق الخارجي للقرية - أعلى مسجد الأنصار"},
+      {name: "د. علياء", spec: "أسنان", days: "السبت – الثلاثاء", hours: "10 ص : 3 ظ", phones: ["01007748178"], address: "الطريق الخارجي للقرية - أعلى مسجد الأنصار"},
+      {name: "د. حسن شعلان", spec: "أطفال", days: "الأحد – الثلاثاء", hours: "12 ظ", phones: ["01007748178"], address: "الطريق الخارجي للقرية - أعلى مسجد الأنصار"},
+      {name: "د. جمال بكير", spec: "نساء وتوليد", days: "الأربعاء", hours: "3 م : 5 م", phones: ["01007748178"], address: "الطريق الخارجي للقرية - أعلى مسجد الأنصار"},
+      {name: "د. علا الببلاوي", spec: "تخاطب", days: "الأحد – الثلاثاء", hours: "من 1 ظهراً", phones: ["01007748178"], address: "الطريق الخارجي للقرية - أعلى مسجد الأنصار"},
+      {name: "د. ريهام البيطاوي", spec: "علاج طبيعي", days: "السبت – الاثنين – الخميس", hours: "من 12 ظهراً", phones: ["01007748178"], address: "الطريق الخارجي للقرية - أعلى مسجد الأنصار"}
+    ]
+  },
+  {
+    title: "عيادة الرحمة لطب الأسنان",
+    key: "rahma_dental",
+    items: [
+      {name: "د. نورا حرب", spec: "أسنان", days: "السبت – الأحد – الأربعاء – الخميس", hours: "6 م : 9 م", phones: ["01145316403", "01122535428", "01095339048", "01158040843"], address: "شارع مسجد التقوى - أعلى معمل القدس"},
+      {name: "د. محمد مصطفى", spec: "أسنان", days: "الثلاثاء – الجمعة", hours: "5 م : 9 م", phones: ["01145316403", "01122535428", "01095339048", "01158040843"], address: "شارع مسجد التقوى - أعلى معمل القدس"}
+    ]
+  },
+  {
+    title: "العيادات الخاصة",
+    key: "private",
+    items: [
+      {name: "د. جمال بكير", spec: "نساء وتوليد", days: "السبت والأربعاء", hours: "9 ص : 10 م", phones: ["01126032472"], address: "بجوار مسجد الحسين"},
+      {name: "د. أحمد سمير", spec: "أسنان", days: "يومياً عدا الجمعة", hours: "5 م : 9 م", phones: ["01126245352"], address: "بجوار منزل عزت يونس عمران"},
+      {name: "د. رضا عبد العزيز", spec: "أسنان", days: "يومياً عدا الجمعة", hours: "2 م : 4 م", phones: ["01144156014"], address: "بجوار زاوية البكيرية"},
+      {name: "د. حسن هاشم", spec: "أطفال", days: "يومياً عدا الجمعة", hours: "المغرب", phones: ["01153111332"], address: "بجوار منزل أستاذ محمود هاشم"},
+      {name: "د. ياسر علي فهيم", spec: "طب الأسرة", days: "يومياً عدا الجمعة", hours: "7 م : 12 م", phones: ["01003472288"], address: "فوق استديو درش"},
+      {name: "د. هاجر يوسف", spec: "أطفال", days: "يومياً عدا الاثنين والجمعة", hours: "8 م : 9 م", phones: ["01150806533"], address: "بجوار زاوية آل بكير"},
+      {name: "د. عبده موسى", spec: "جراحة", days: "يومياً عدا الجمعة", hours: "المغرب", phones: ["01015160920"], address: "منزله – بجوار محمد شكري"},
+      {name: "د. أحمد فؤاد برعي", spec: "تخاطب", days: "السبت – الثلاثاء – الخميس", hours: "4 م : 8 م", phones: ["01128550539"], address: "بجوار زاوية البكيرية"}
+    ]
+  },
+  {
+    title: "المعامل الطبية",
+    key: "labs",
+    items: [
+      {name: "معمل الهدى (د. خالد حمودة البصيلي)", spec: "تحاليل طبية", days: "يومياً", hours: "المغرب : 10", phones: ["01116481690"], address: "منطقة المغربي"},
+      {name: "معمل القدس (د. حمدي حنفي خلف الله / د. سعيد محمود موسى)", spec: "تحاليل طبية", days: "يومياً", hours: "10 ص : 10 م", phones: ["01030342244", "0111808062", "01027477911", "01010096643"], address: "شارع مسجد التقوى"},
+      {name: "معمل رؤية (د. أحمد مسعود بكير)", spec: "تحاليل طبية", days: "يومياً", hours: "10 ص : 10 م", phones: ["01021521399", "01140965946"], address: "بجوار زاوية آل بكير"},
+      {name: "معمل الرحمة (د. محمود عبد التواب بكير)", spec: "تحاليل طبية", days: "يومياً", hours: "9 ص : 10 م", phones: ["01202438089", "01148168379"], address: "بجوار مسجد الحسين"}
+    ]
+  }
+];
+
+let view = "transport", selected = "الكل";
+const tabs = document.getElementById("tabs"), filters = document.getElementById("filters"), results = document.getElementById("results"), search = document.getElementById("search");
+
+function norm(s){
+  return String(s)
+    .replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+    .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+    .toLowerCase();
+}
+
+function phoneLinks(phones){
+  return phones.map((p, i) => `<a class="phone ${i?'secondary':''}" href="tel:${p.replace(/\D/g,'')}" aria-label="اتصل بـ ${p}">☎ ${p}</a>`).join("");
+}
+
+function renderFilters(){
+  filters.innerHTML = "";
+  let opts = [];
+  if(view === "transport"){
+    opts = ["الكل", ...new Set(transportEntries.map(e => e.category))];
+  } else if(view === "sharia"){
+    opts = [["all","الكل"], ["men","مغسلو الموتى"], ["women","مغسلات النساء"], ["consult","الاستشارات"]];
+  } else if(view === "medical"){
+    opts = [["all","الكل"], ["complex","المجمع الطبي"], ["rahma_dental","عيادة الرحمة أسنان"], ["private","العيادات الخاصة"], ["labs","المعامل"]];
+  }
+
+  opts.forEach(opt => {
+    let key = Array.isArray(opt) ? opt[0] : opt;
+    let label = Array.isArray(opt) ? opt[1] : opt;
+    let b = document.createElement("button");
+    b.className = "filter" + ((selected === key) ? " active" : "");
+    b.textContent = label;
+    b.onclick = () => { selected = key; renderFilters(); render(); };
+    filters.appendChild(b);
+  });
+}
+
+function transportCard(e){
+  let meta = e.from ? `<div class="meta">📍 ${e.from} ← ${e.to} · ⏰ ${e.time}</div>` : "";
+  return `<article class="card"><div class="top"><p class="name">${e.name}</p><span class="badge">${e.category}</span></div><div class="phones">${phoneLinks(e.phones)}</div>${meta}</article>`;
+}
+
+function shariaCard(item, section){
+  return `<article class="card"><div class="top"><p class="name">${item.name}</p><span class="badge">${section.title.replace("دليل ","")}</span></div><div class="phones">${phoneLinks(item.phones)}</div>${item.note ? `<div class="note">${item.note}</div>` : ""}</article>`;
+}
+
+function medicalCard(item, section){
+  return `<article class="card">
+    <div class="top">
+      <p class="name">${item.name}</p>
+      <span class="badge">${item.spec || section.title}</span>
+    </div>
+    <div class="phones">${phoneLinks(item.phones)}</div>
+    <div class="meta">
+      ${item.days ? `📅 <strong>الأيام:</strong> ${item.days}<br>` : ''}
+      ${item.hours ? `⏰ <strong>الموعد:</strong> ${item.hours}<br>` : ''}
+      ${item.address ? `📍 <strong>العنوان:</strong> ${item.address}` : ''}
+    </div>
+  </article>`;
+}
+
+function render(){
+  let q = norm(search.value.trim());
+  let total = 0;
+  let html = "";
+  
+  document.getElementById("shariaNotices").hidden = (view !== "sharia");
+  document.getElementById("medicalNotices").hidden = (view !== "medical");
+
+  if(view === "transport"){
+    let list = transportEntries.filter(e => (selected === "الكل" || e.category === selected) && norm([e.name, e.category, ...e.phones, e.from||"", e.to||"", e.time||""].join(" ")).includes(q));
+    total = list.length;
+    html = list.length ? `<div class="cards">${list.map(transportCard).join("")}</div>` : '<div class="empty">لا توجد نتائج مطابقة.</div>';
+  } 
+  else if(view === "sharia"){
+    shariaSections.forEach(s => {
+      if(selected !== "all" && selected !== s.key) return;
+      let list = s.items.filter(i => norm([i.name, ...i.phones, i.note||""].join(" ")).includes(q));
+      if(!list.length) return;
+      total += list.length;
+      html += `<section class="section ${s.key}"><h2>${s.title}</h2><div class="cards">${list.map(i => shariaCard(i, s)).join("")}</div></section>`;
+    });
+    if(!html) html = '<div class="empty">لا توجد نتائج مطابقة.</div>';
+  }
+  else if(view === "medical"){
+    medicalSections.forEach(s => {
+      if(selected !== "all" && selected !== s.key) return;
+      let list = s.items.filter(i => norm([i.name, i.spec||"", i.days||"", i.hours||"", i.address||"", ...i.phones].join(" ")).includes(q));
+      if(!list.length) return;
+      total += list.length;
+      let secClass = (s.key === "labs") ? "lab" : "medical";
+      html += `<section class="section ${secClass}"><h2>${s.title}</h2><div class="cards">${list.map(i => medicalCard(i, s)).join("")}</div></section>`;
+    });
+    if(!html) html = '<div class="empty">لا توجد نتائج مطابقة.</div>';
+  }
+
+  document.getElementById("count").textContent = `عدد النتائج: ${total}`;
+  results.innerHTML = html;
+}
+
+tabs.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+  view = b.dataset.view;
+  selected = (view === "transport") ? "الكل" : "all";
+  tabs.querySelectorAll("button").forEach(x => x.classList.toggle("active", x === b));
+  search.value = "";
+  search.placeholder = (view === "transport") ? "ابحث باسم السائق أو رقم الهاتف أو نوع الخدمة..." : (view === "sharia" ? "ابحث بالاسم أو رقم الهاتف..." : "ابحث بـ اسم الطبيب، التخصص، أو المعمل...");
+  renderFilters();
+  render();
+}));
+
+search.addEventListener("input", render);
+renderFilters();
+render();
+</script>
+</body>
+</html>

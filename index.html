@@ -5,6 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0f766e">
 <title>دليل خدمات الشنباب - الشامل (مواصلات - شرعي - طبي)</title>
+<!-- Open Graph / WhatsApp Preview Tags -->
+<meta property="og:title" content="دليل خدمات الشنباب - الشامل">
+<meta property="og:description" content="الدليل الشامل لخدمات قرية الشنباب: مواصلات، دليل شرعي، ودليل طبي وعيادات والمعامل. تصفح واتصال مباشر بنقرة واحدة.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://elgamasyahmad.github.io/egycod/">
+<!-- Web App Manifest for PWA -->
+<link rel="manifest" href="data:application/manifest+json;charset=utf-8,{
+  &quot;name&quot;: &quot;دليل خدمات الشنباب&quot;,
+  &quot;short_name&quot;: &quot;دليل الشنباب&quot;,
+  &quot;start_url&quot;: &quot;./&quot;,
+  &quot;display&quot;: &quot;standalone&quot;,
+  &quot;background_color&quot;: &quot;#f3f6f8&quot;,
+  &quot;theme_color&quot;: &quot;#0f766e&quot;,
+  &quot;icons&quot;: [{
+    &quot;src&quot;: &quot;https://img.icons8.com/color/192/48/service.png&quot;,
+    &quot;sizes&quot;: &quot;192x192&quot;,
+    &quot;type&quot;: &quot;image/png&quot;
+  }]
+}">
 <style>
 :root{--bg:#f3f6f8;--ink:#17212b;--muted:#64748b;--green:#0f766e;--blue:#1d4ed8;--red:#b91c1c}
 *{box-sizing:border-box}
@@ -81,6 +100,20 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 12px 24px
 <footer>تم جمع وتحديث جميع الأدلة الخدمية لقرية الشنباب في ملف واحد. آخر تحديث شامل: 17 / 10 / 2026 م.</footer>
 
 <script>
+// تفعيل العمل بدون إنترنت (Service Worker)
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    self.addEventListener('install', e => {
+      e.waitUntil(caches.open('shabab-v1').then(cache => cache.addAll(['./'])));
+    });
+    self.addEventListener('fetch', e => {
+      e.respondWith(caches.match(e.request).then(response => response || fetch(e.request)));
+    });
+  `;
+  const blob = new Blob([swCode], {type: 'text/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+}
+
 const transportEntries = [
   {name:"زكريا إبراهيم شناوي",category:"أجرة",phones:["01000651520","0128692876"],from:"مسجد المحجوب",to:"المنيب",time:"6:00 ص"},
   {name:"علاء عليش العزالي",category:"أجرة",phones:["01050673004"],from:"مطعم مصطفى حامد",to:"المنيب",time:"5:50 ص"},
@@ -118,7 +151,6 @@ const shariaSections = [
   ]},
   {title:"دليل المغسلات الشرعيات لنساء الشباب",key:"women",items:[
     {name:"ش. محمد جمعة الشريف",phones:["01152535338"]},
-    {name:"ش. ربيع ثروت الجمسي",phones:["01119644215"]},
     {name:"ش. كامل رياض جودة",phones:["01013406443"]}
   ]},
   {title:"دليل الاستشارات",key:"consult",items:[
